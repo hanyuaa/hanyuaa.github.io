@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Singleton">
 <meta property="og:description" content="Oracle数据库基本查询基本查询 查询语法 1select * | 列名 from 表名  别名用法 1select empno AS &quot;编号&quot;,ename as &quot;姓名&quot; from emp; 或 1select empno AS 编号,ename as 姓名 from emp; 区别: 1select empno AS 编号,ename as &quot;姓    名&quot; from emp; 不加双引号的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-17T07:00:56.606Z">
+<meta property="og:updated_time" content="2017-10-17T07:24:05.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH三大框架整合细节">
 <meta name="twitter:description" content="Oracle数据库基本查询基本查询 查询语法 1select * | 列名 from 表名  别名用法 1select empno AS &quot;编号&quot;,ename as &quot;姓名&quot; from emp; 或 1select empno AS 编号,ename as 姓名 from emp; 区别: 1select empno AS 编号,ename as &quot;姓    名&quot; from emp; 不加双引号的">
@@ -332,11 +332,23 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> deptno = <span class="number">20</span>;</div></pre></td></tr></table></figure>
 </li>
 <li><p>比较运算符</p>
-<p>| 操作符  |     含义      |<br>| :–: | :———: |<br>|  =   |     等于      |<br>|  &gt;   |     大于      |<br>|  &gt;=  |    大于等于     |<br>|  &lt;   |     小于      |<br>|  &lt;=  |    小于等于     |<br>|  &lt;&gt;  | 不等于(也可以是!=) |</p>
-</li>
-<li><p>其他比较运算符</p>
-<p>|       操作符        |            含义             |<br>| :————–: | :———————–: |<br>| BETWEEN…AND… |        两个值之间(包含边界)        |<br>|        IN        |         等于值列表中的一个         |<br>|       lIKE       | 模糊查询(‘_’匹配一个字符,’%’匹配多个字符) |<br>|     IS NULL      |            空值             |</p>
-<p>查询20号或30号部门的员工，例如：根据ID号，选中的员工，批量删除</p>
+<table border="1px" cellspacing="0px" style="text-align:center"><br>  <tr><br>      <th>操作符</th><br>      <th>含义</th><br>  </tr><br>  <tr><br>      <td>=</td><br>      <td>等于</td><br>  </tr><br>  <tr><br>      <td>&gt;</td><br>      <td>大于</td><br>  </tr><br>  <tr><br>      <td>&gt;=</td><br>      <td>大于等于</td><br>  </tr><br>  <tr><br>      <td>&lt;</td><br>      <td>小于</td><br>  </tr><br>  <tr><br>      <td>&lt;=</td><br>      <td>小于等于</td><br>  </tr><br>  <tr><br>      <td>&lt;&gt;</td><br>      <td>不等于(也可以是!=)</td><br>  </tr><br></table></li>
+<li><p>其他比较运算符<br><table border="1px" cellspacing="0px" style="text-align:center"><br>  <tr></tr></table></p>
+<pre><code>&lt;th&gt;操作符&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+</code></pre><p>  <br>  <tr></tr></p>
+<pre><code>&lt;td&gt;BETWEEN...AND...&lt;/td&gt;
+&lt;td&gt;两个值之间(包含边界)&lt;/td&gt;
+</code></pre><p>  <br>  <tr></tr></p>
+<pre><code>&lt;td&gt;IN&lt;/td&gt;
+&lt;td&gt;等于值列表中的一个&lt;/td&gt;
+</code></pre><p>  <br>  <tr></tr></p>
+<pre><code>&lt;td&gt;LIKE&lt;/td&gt;
+&lt;td&gt;模糊查询(&apos;_&apos;匹配一个字符,&apos;%&apos;匹配多个字符)&lt;/td&gt;
+</code></pre><p>  <br>  <tr></tr></p>
+<pre><code>&lt;td&gt;IS NULL&lt;/td&gt;
+&lt;td&gt;空值&lt;/td&gt;
+</code></pre><p>  <br><br>查询20号或30号部门的员工，例如：根据ID号，选中的员工，批量删除</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> (deptno=<span class="number">20</span>) <span class="keyword">or</span> (deptno=<span class="number">30</span>);</div></pre></td></tr></table></figure>
 <p>或</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="keyword">in</span> (<span class="number">30</span>,<span class="number">20</span>);</div></pre></td></tr></table></figure>
@@ -346,8 +358,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> ename <span class="keyword">like</span> <span class="string">'%\_%'</span> escape <span class="string">'\';</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>逻辑运算符</p>
-<p>| 操作符  |  含义  |<br>| :–: | :–: |<br>| AND  | 逻辑并  |<br>|  OR  | 逻辑或  |<br>| NOT  | 逻辑否  |</p>
-</li>
+<table border="1px" cellspacing="0px" style="text-align:center"><br>  <tr><br>      <th>操作符</th><br>      <th>含义</th><br>  </tr><br>  <tr><br>      <td>AND</td><br>      <td>逻辑并</td><br>  </tr><br>  <tr><br>      <td>OR</td><br>      <td>逻辑或 </td><br>  </tr><br>  <tr><br>      <td>NOT</td><br>      <td>逻辑否</td><br>  </tr><br></table></li>
 <li><p>使用<code>order by</code>对结果排序<br>查询员工信息，按工资降序排列,相同工资的员工再按入职时间降序排列</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">order</span> <span class="keyword">by</span> sal <span class="keyword">desc</span>,hiredate <span class="keyword">desc</span>;</div></pre></td></tr></table></figure>
 <p>注意：只有当sal相同的情况下，hiredate排序才有作用<br>查询20号部门，且工资大于1500，按入职时间降序排列</p>
