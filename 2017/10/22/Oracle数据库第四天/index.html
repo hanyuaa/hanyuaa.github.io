@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Oracle第四天PL/SQL编程语言概念 什么是PL/SQL?PLSQL(Procedure Language/SQL)是Oracle对sql语言的过程化扩展,指在SQL命令语言中增加了过程处理语句（如分支、循环等），使SQL语言具有过程处理能力。  语法 PLSQL程序的完整组成结构如下：1234567891011[declare]	变量声明;	变量声明;begin	DML/TCL操作;	DM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle数据库第四天">
+<meta property="og:url" content="http://yoursite.com/2017/10/22/Oracle数据库第四天/index.html">
+<meta property="og:site_name" content="Singleton">
+<meta property="og:description" content="Oracle第四天PL/SQL编程语言概念 什么是PL/SQL?PLSQL(Procedure Language/SQL)是Oracle对sql语言的过程化扩展,指在SQL命令语言中增加了过程处理语句（如分支、循环等），使SQL语言具有过程处理能力。  语法 PLSQL程序的完整组成结构如下：1234567891011[declare]	变量声明;	变量声明;begin	DML/TCL操作;	DM">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-22T01:54:55.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle数据库第四天">
+<meta name="twitter:description" content="Oracle第四天PL/SQL编程语言概念 什么是PL/SQL?PLSQL(Procedure Language/SQL)是Oracle对sql语言的过程化扩展,指在SQL命令语言中增加了过程处理语句（如分支、循环等），使SQL语言具有过程处理能力。  语法 PLSQL程序的完整组成结构如下：1234567891011[declare]	变量声明;	变量声明;begin	DML/TCL操作;	DM">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/22/Oracle数据库第四天/"/>
+
+
+
+
+
+  <title>Oracle数据库第四天 | Singleton</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Singleton</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/Oracle数据库第四天/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hanyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Singleton">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Oracle数据库第四天</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T09:53:46+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Oracle第四天"><a href="#Oracle第四天" class="headerlink" title="Oracle第四天"></a>Oracle第四天</h1><h2 id="PL-SQL编程语言"><a href="#PL-SQL编程语言" class="headerlink" title="PL/SQL编程语言"></a>PL/SQL编程语言</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>什么是PL/SQL?<br>PLSQL(Procedure Language/SQL)是Oracle对sql语言的过程化扩展,指在SQL命令语言中增加了过程处理语句（如分支、循环等），使SQL语言具有过程处理能力。</li>
+</ul>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>PLSQL程序的完整组成结构如下：<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">declare</span>]</div><div class="line">	变量声明;</div><div class="line">	变量声明;</div><div class="line"><span class="keyword">begin</span></div><div class="line">	DML/TCL操作;</div><div class="line">	DML/TCL操作;</div><div class="line">  [exception]</div><div class="line">		例外处理;</div><div class="line">		例外处理;</div><div class="line"><span class="keyword">end</span>;</div><div class="line">/</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意：在PLSQL程序中，；号表示每条语句的结束，/表示整个PLSQL程序结束</p>
+<h3 id="常量和变量的定义"><a href="#常量和变量的定义" class="headerlink" title="常量和变量的定义"></a>常量和变量的定义</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span> </div><div class="line">	v_name varchar2(<span class="number">30</span>):=<span class="string">'TOM'</span>;      <span class="comment">-- :=相当于Java中的=, =相当于Java中的==</span></div><div class="line">	v_age number(9):=1;</div><div class="line">	v_gender constant number(1):=1;  <span class="comment">--常量</span></div><div class="line">	v_sal emp.sal%type:=1000;        <span class="comment">--引用型</span></div><div class="line">	v_row emp%rowtype;               <span class="comment">--记录型</span></div><div class="line"><span class="keyword">begin</span></div><div class="line">	v_name:=<span class="string">'JERRY'</span>; </div><div class="line">	<span class="comment">--v_gender:='0';</span></div><div class="line">	<span class="comment">--PLSQL语句，将ename的值放入v_name变量中，sal的值放入v_sal变量中   </span></div><div class="line">	<span class="keyword">select</span> ename ,sal <span class="keyword">into</span> v_name , v_sal <span class="keyword">from</span> emp <span class="keyword">where</span> empno=<span class="number">7369</span>;</div><div class="line">	<span class="keyword">select</span> * <span class="keyword">into</span> v_row <span class="keyword">from</span> emp <span class="keyword">where</span> empno=<span class="number">7369</span>;</div><div class="line">	<span class="comment">--dbms_output.put_line(v_name||'--'||v_sal||'——'||v_gender);</span></div><div class="line">	dbms_output.put_line(v_row.ename||'<span class="comment">--'||v_row.sal||'——'||v_row.job);</span></div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br><code>dbms_output</code>是oracle中的一个输出对象<br><code>put_line</code>是上述对象的一个方法，用于输出一个字符串自动换行 </p>
+<p><strong>何时使用%type，何时使用%rowtype？</strong></p>
+<ul>
+<li>当定义变量时，该变量的类型与表中某字段的类型相同时，可以使用%type</li>
+<li>当定义变量时，该变量与整个表结构完全相同时，可以使用%rowtype，此时通过变量名.字段名，可以取值变量中对应的值<br>项目中，常用%type</li>
+</ul>
+<h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><ul>
+<li><p>语法一：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if 条件 then</div><div class="line">	逻辑处理</div><div class="line"><span class="keyword">end</span> <span class="keyword">if</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>语法二：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if 条件 then</div><div class="line">	逻辑处理</div><div class="line">else</div><div class="line">	逻辑处理</div><div class="line"><span class="keyword">end</span> <span class="keyword">if</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>语法三：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">if 条件 then</div><div class="line">	逻辑处理</div><div class="line">elsif 条件 then</div><div class="line">	逻辑处理</div><div class="line">.......   </div><div class="line">else</div><div class="line">	逻辑处理</div><div class="line"><span class="keyword">end</span> <span class="keyword">if</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>练习：判断一个年龄数据，小于18 输出“未成年人”，18—60 “成年人” ，大于60输出“老年人”:</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">	v_age <span class="built_in">number</span>(<span class="number">9</span>):=&amp;nums;</div><div class="line"><span class="keyword">begin</span></div><div class="line">	<span class="keyword">if</span>  v_age&lt;<span class="number">18</span> <span class="keyword">then</span></div><div class="line">		dbms_output.put_line(<span class="string">'未成年人'</span>);</div><div class="line">	elsif v_age&gt;=18 and v_age&lt;=60 then</div><div class="line">		dbms_output.put_line('成年人');</div><div class="line">	else</div><div class="line">		dbms_output.put_line('老年人');</div><div class="line">	<span class="keyword">end</span> <span class="keyword">if</span>;  </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure></p>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><ul>
+<li><p>语法一：无条件循环,有条件退出</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">loop</div><div class="line">	...</div><div class="line"><span class="keyword">end</span> <span class="keyword">loop</span>;	</div><div class="line"><span class="comment">--输出1到100个数</span></div><div class="line"><span class="keyword">declare</span></div><div class="line">	v_num <span class="built_in">number</span>(<span class="number">9</span>):=<span class="number">1</span>;</div><div class="line"><span class="keyword">begin</span></div><div class="line">	<span class="keyword">loop</span></div><div class="line">		<span class="comment">--if v_num&gt;100 then</span></div><div class="line">		<span class="comment">--	exit;</span></div><div class="line">		<span class="comment">--end if;    </span></div><div class="line">		<span class="keyword">exit</span> <span class="keyword">when</span> v_num&gt;<span class="number">100</span>;</div><div class="line">		dbms_output.put_line(v_num);</div><div class="line">		v_num:=v_num+1;</div><div class="line">	<span class="keyword">end</span> <span class="keyword">loop</span>;</div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>语法二：有条件循环(while 条件)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">loop</div><div class="line">	...</div><div class="line"><span class="keyword">end</span> <span class="keyword">loop</span>;</div><div class="line"><span class="comment">--输出1到100个数</span></div><div class="line"><span class="keyword">declare</span></div><div class="line">	v_num <span class="built_in">number</span>(<span class="number">9</span>):=<span class="number">1</span>;</div><div class="line"><span class="keyword">begin</span></div><div class="line">	<span class="keyword">while</span> v_num&lt;=<span class="number">100</span></div><div class="line">	<span class="keyword">loop</span></div><div class="line">		dbms_output.put_line(v_num);</div><div class="line">		v_num:=v_num+1;</div><div class="line">	<span class="keyword">end</span> <span class="keyword">loop</span>; </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>语法三：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">for 变量名 in 起始值..终止值</div><div class="line">loop</div><div class="line">	...</div><div class="line"><span class="keyword">end</span> <span class="keyword">loop</span>;</div><div class="line"><span class="comment">--输出1到100个数 </span></div><div class="line"><span class="keyword">begin</span></div><div class="line">	<span class="keyword">for</span> v_num <span class="keyword">in</span> <span class="number">1.</span><span class="number">.100</span></div><div class="line">	<span class="keyword">loop</span></div><div class="line">		dbms_output.put_line(v_num);</div><div class="line">	<span class="keyword">end</span> <span class="keyword">loop</span>;  </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><ul>
+<li>什么是光标/游标/cursor<br>类似于JDBC中的ResultSet对象的功能，用于存储一个查询返回的多行数据,从上向下依次获取每一记录的内容</li>
+</ul>
+<p>使用无参光标cursor，查询所有员工的姓名和工资【如果需要遍历多条记录时，使用光标cursor，无记录找到使用cemp%notfound】<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">    <span class="comment">--定义游标</span></div><div class="line">    <span class="keyword">cursor</span> cemp <span class="keyword">is</span> <span class="keyword">select</span> ename,sal <span class="keyword">from</span> emp;</div><div class="line">    <span class="comment">--定义变量</span></div><div class="line">    vename emp.ename%type;</div><div class="line">    vsal   emp.sal%type;</div><div class="line"><span class="keyword">begin</span></div><div class="line">    <span class="comment">--打开游标，这时游标位于第一条记录之前</span></div><div class="line">    <span class="keyword">open</span> cemp;</div><div class="line">    <span class="comment">--循环</span></div><div class="line">    loop</div><div class="line">       <span class="comment">--向下移动游标一次</span></div><div class="line">       fetch cemp into vename,vsal; </div><div class="line">       <span class="comment">--退出循环,当游标下移一次后，找不到记录时，则退出循环</span></div><div class="line">       exit when cemp%notfound;</div><div class="line">       <span class="comment">--输出结果</span></div><div class="line">       dbms_output.put_line(vename||'<span class="comment">--------'||vsal);</span></div><div class="line">    <span class="keyword">end</span> <span class="keyword">loop</span>;</div><div class="line">    <span class="comment">--关闭游标</span></div><div class="line">    close cemp;</div><div class="line"><span class="keyword">end</span>;</div><div class="line">/</div></pre></td></tr></table></figure></p>
+<p>使用带参光标cursor，查询10号部门的员工姓名和工资<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">    <span class="keyword">cursor</span> cemp(pdeptno emp.deptno%<span class="keyword">type</span>) <span class="keyword">is</span> <span class="keyword">select</span> ename,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno=pdeptno;</div><div class="line">    pename emp.ename%type;</div><div class="line">    psal emp.sal%type; </div><div class="line"><span class="keyword">begin</span> </div><div class="line">    <span class="keyword">open</span> cemp(&amp;deptno);</div><div class="line">    loop</div><div class="line">        fetch cemp into pename,psal;	 </div><div class="line">        exit when cemp%notfound;</div><div class="line">        dbms_output.put_line(pename||'的薪水是'||psal);</div><div class="line">    <span class="keyword">end</span> <span class="keyword">loop</span>;</div><div class="line">    close cemp;</div><div class="line"><span class="keyword">end</span>;</div><div class="line">/</div></pre></td></tr></table></figure></p>
+<p>使用无参光标cursor，真正给员工涨工资，ANALYST涨1000，MANAGER涨800，其它涨400，要求显示编号，姓名，职位，薪水<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">    <span class="keyword">cursor</span> cemp <span class="keyword">is</span> <span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp;</div><div class="line">    pempno emp.empno%type;</div><div class="line">    pename emp.ename%type;</div><div class="line">    pjob   emp.job%type;</div><div class="line">    psal   emp.sal%type;</div><div class="line"><span class="keyword">begin</span></div><div class="line">    <span class="keyword">open</span> cemp;</div><div class="line">    loop</div><div class="line">        fetch cemp into pempno,pename,pjob,psal;</div><div class="line">        <span class="comment">--循环退出条件一定要写</span></div><div class="line">        exit when cemp%notfound;</div><div class="line">        if pjob='ANALYST' then</div><div class="line">            <span class="keyword">update</span> emp <span class="keyword">set</span> sal = sal + <span class="number">1000</span> <span class="keyword">where</span> empno = pempno;</div><div class="line">        elsif pjob='MANAGER' then</div><div class="line">            <span class="keyword">update</span> emp <span class="keyword">set</span> sal = sal + <span class="number">800</span> <span class="keyword">where</span> empno = pempno;</div><div class="line">        else </div><div class="line">	    <span class="keyword">update</span> emp <span class="keyword">set</span> sal = sal + <span class="number">400</span> <span class="keyword">where</span> empno = pempno;</div><div class="line">        <span class="keyword">end</span> <span class="keyword">if</span>;</div><div class="line">    <span class="keyword">end</span> <span class="keyword">loop</span>;</div><div class="line">    <span class="keyword">commit</span>;</div><div class="line">    close cemp;</div><div class="line"><span class="keyword">end</span>;</div><div class="line">/</div></pre></td></tr></table></figure></p>
+<h3 id="例外"><a href="#例外" class="headerlink" title="例外"></a>例外</h3><p>异常的作用：为了提高语言的容错性和健壮性</p>
+<ul>
+<li><p>预定义</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">	v_num <span class="built_in">number</span>(<span class="number">5</span>);</div><div class="line"><span class="keyword">begin</span></div><div class="line">	<span class="comment">--v_num:=10/0;  </span></div><div class="line">	v_num:=<span class="number">1000000</span>;  </div><div class="line">exception</div><div class="line">	<span class="comment">--VALUE_ERROR</span></div><div class="line">	<span class="comment">--ZERO_DIVIDE</span></div><div class="line">	when  others then</div><div class="line">	v_num:=0;  </div><div class="line">	dbms_output.put_line(v_num);   </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>自定义</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--输一个年龄数据，大于150就抛异常</span></div><div class="line"><span class="keyword">declare</span></div><div class="line">	v_age <span class="built_in">number</span>(<span class="number">10</span>):=&amp;nums;</div><div class="line">	exc_age exception;</div><div class="line"><span class="keyword">begin</span></div><div class="line">	<span class="keyword">if</span> v_age&gt;<span class="number">150</span> <span class="keyword">then</span></div><div class="line">		<span class="keyword">raise</span> exc_age ; </div><div class="line">	<span class="keyword">end</span> <span class="keyword">if</span>;</div><div class="line">	exception</div><div class="line">		when exc_age then</div><div class="line">		<span class="comment">---p1 错误代码    p2 错误信息</span></div><div class="line">		raise_application_error(-20001,'捕获了异常');</div><div class="line">		<span class="comment">-- v_age:=150;</span></div><div class="line">		<span class="comment">--dbms_output.put_line('捕获了异常，年龄重置成了150');</span></div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><p>存储在数据库中供所有用户程序调用的子程序叫存储过程、存储函数用CREATE PROCEDURE命令建立存储过程。<br>语法：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> [<span class="keyword">or</span> <span class="keyword">replace</span>] <span class="keyword">procedure</span> 过程名[(参数列表)]  </div><div class="line"><span class="keyword">as</span></div><div class="line">PLSQL程序体；【<span class="keyword">begin</span>…<span class="keyword">end</span>;/】  <span class="comment">--无declare</span></div></pre></td></tr></table></figure></p>
+<p>使用out参数接收指定员工的年薪<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">procedure</span> pro_yearsal(v_no <span class="built_in">number</span>,v_yearsal <span class="keyword">out</span> <span class="built_in">number</span>)</div><div class="line"><span class="keyword">is</span></div><div class="line"><span class="keyword">begin</span></div><div class="line">   <span class="keyword">select</span> sal*<span class="number">12</span>+nvl(comm,<span class="number">0</span>)  <span class="keyword">into</span> v_yearsal <span class="keyword">from</span> emp <span class="keyword">where</span> empno=v_no; </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure></p>
+<p>–使用带out类型参数的存储过程<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">	v_sal <span class="built_in">number</span>(<span class="number">10</span>,<span class="number">2</span>);</div><div class="line"><span class="keyword">begin</span></div><div class="line">	pro_yearsal(<span class="number">7369</span>,v_sal);</div><div class="line">	dbms_output.put_line(v_sal);</div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="存储函数"><a href="#存储函数" class="headerlink" title="存储函数"></a>存储函数</h2><p>函数（Function）为一命名的存储程序，可带参数，并返回一个计算值。函数和过程的结构类似，但必须有一个RETURN子句，用于返回函数值。函数说明要指定函数名、结果值的类型，以及参数类型等。<br>建立存储函数的语法：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> <span class="keyword">REPLACE</span>] <span class="keyword">FUNCTION</span> 函数名【(参数列表) 】</div><div class="line"> <span class="keyword">RETURN</span>  返回值类型</div><div class="line"><span class="keyword">AS</span></div><div class="line">PLSQL子程序体；【<span class="keyword">begin</span>…<span class="keyword">end</span>;/】</div></pre></td></tr></table></figure></p>
+<p>–返回指定员工的年薪<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">function</span> func_yearsal(v_no <span class="built_in">number</span>)</div><div class="line"><span class="keyword">return</span> <span class="built_in">number</span></div><div class="line"><span class="keyword">is</span></div><div class="line"> 	v_yearsal <span class="built_in">number</span>(<span class="number">10</span>,<span class="number">2</span>);</div><div class="line"><span class="keyword">begin</span></div><div class="line">   <span class="keyword">select</span> sal*<span class="number">12</span>+nvl(comm,<span class="number">0</span>)  <span class="keyword">into</span> v_yearsal <span class="keyword">from</span> emp <span class="keyword">where</span> empno=v_no; </div><div class="line">   return v_yearsal;  </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure></p>
+<p>–使用存储函数<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span></div><div class="line">v_sal <span class="built_in">number</span>(<span class="number">10</span>,<span class="number">2</span>);</div><div class="line"><span class="keyword">begin</span></div><div class="line"> v_sal:= func_yearsal(<span class="number">7788</span>);</div><div class="line"> dbms_output.put_line(v_sal);</div><div class="line"><span class="keyword">end</span>;</div><div class="line"><span class="comment">--或</span></div><div class="line"><span class="keyword">begin</span></div><div class="line"> dbms_output.put_line(func_yearsal(<span class="number">7369</span>));</div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>什么情况【适合使用】过程函数，什么情况【适合使用】SQL？<br>【适合使用】过程函数：<br>        》需要长期保存在数据库中<br>            》需要被多个用户重复调用<br>            》业务逻辑相同，只是参数不一样<br>        》批操作大量数据，例如：批量插入很多数据</p>
+<p>【适合使用】SQL：<br>        》凡是上述反面，都可使用SQL<br>        》对表，视图，序列，索引，等这些还是要用SQL </p>
+</blockquote>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><ul>
+<li>数据库触发器是一个与表相关联的、存储的PL/SQL程序。每当一个特定的数据操作语句(Insert,update,delete)在指定的表上发出时，Oracle自动地执行触发器中定义的语句序列。</li>
+<li>触发器的类型<ul>
+<li>语句级触发器<br>在指定的操作语句操作之前或之后执行一次，不管这条语句影响了多少行 。</li>
+<li>行级触发器（FOR EACH ROW）<br>触发语句作用的每一条记录都被触发。在行级触发器中使用:old和:new伪记录变量, 识别值的状态。</li>
+</ul>
+</li>
+</ul>
+<p>语法：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span>  <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">trigger</span> 触发器名称</div><div class="line"><span class="keyword">before</span>|<span class="keyword">after</span></div><div class="line"><span class="keyword">delete</span> | <span class="keyword">insert</span> | <span class="keyword">update</span>[<span class="keyword">of</span> 列名]</div><div class="line"><span class="keyword">on</span> 表名</div><div class="line">[<span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span>]</div><div class="line"></div><div class="line">[<span class="keyword">declare</span>]</div><div class="line"></div><div class="line"><span class="keyword">begin</span></div><div class="line">  </div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span>  <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">trigger</span> tri_emp_sal</div><div class="line"><span class="keyword">after</span></div><div class="line"><span class="keyword">update</span> <span class="keyword">of</span> sal</div><div class="line"><span class="keyword">on</span> emp</div><div class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span>  <span class="comment">--出现了：old或者：new 使用for each row</span></div><div class="line"><span class="keyword">declare</span></div><div class="line"><span class="keyword">begin</span></div><div class="line">   <span class="keyword">insert</span> <span class="keyword">into</span> emp_sal_log <span class="keyword">values</span>(seq_emp_sal_log.nextval,:new.empno, :old.sal,:new.sal,<span class="keyword">sysdate</span>);</div><div class="line"><span class="keyword">end</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>触发语句与伪记录变量的值<br>|触发语句  | :old                 |  :new            |<br>|    :-:     |         :-:             |         :-:    |<br>|insert   |  所有字段都是空(null) |   将要插入的数据   |<br>|update   |  更新以前该行的值      |      更新后行的值   |<br>|delete   |  删除以前该行的值     |      所有字段都是空(null) |</li>
+</ul>
+<h2 id="Oracle优化"><a href="#Oracle优化" class="headerlink" title="Oracle优化"></a>Oracle优化</h2><ul>
+<li>为什么要Oracle优化：<br>随着实际项目的启动，Oracle经过一段时间的运行，最初的Oracle设置，会与实际Oracle运行性能会有一些差异，这时我们就需要做一个优化调整。</li>
+<li>Oracle优化这个课题较大，可分为四大类：<ul>
+<li>主机性能</li>
+<li>内存使用性能</li>
+<li>网络传输性能</li>
+<li>SQL语句执行性能【程序员】</li>
+</ul>
+</li>
+<li><p>下面列出一些oracleSQL优化方案：</p>
+<ul>
+<li><p>（01）选择最有效率的表名顺序（笔试常考）<br>ORACLE的解析器按照从右到左的顺序处理FROM子句中的表名，<br>FROM子句中写在最后的表将被最先处理，<br>在FROM子句中包含多个表的情况下,你必须选择记录条数最少的表放在最后，<br>如果有3个以上的表连接查询,那就需要选择那个被其他表所引用的表放在最后。<br>例如：查询员工的编号，姓名，工资，工资等级，部门名<br>select emp.empno,emp.ename,emp.sal,salgrade.grade,dept.dname<br>from salgrade,dept,emp<br>where (emp.deptno = dept.deptno) and (emp.sal between salgrade.losal and salgrade.hisal)<br>1)如果三个表是完全无关系的话，将记录和列名最少的表，写在最后，然后依次类推<br>2)如果三个表是有关系的话，将引用最多的表，放在最后，然后依次类推</p>
+</li>
+<li><p>（02）WHERE子句中的连接顺序（笔试常考）<br>ORACLE采用自右而左的顺序解析WHERE子句,根据这个原理,表之间的连接必须写在其他WHERE条件之左,<br>那些可以过滤掉最大数量记录的条件必须写在WHERE子句的之右。<br>例如：查询员工的编号，姓名，工资，部门名<br>select emp.empno,emp.ename,emp.sal,dept.dname from emp,dept<br>where (emp.deptno = dept.deptno) and (emp.sal &gt; 1500)        </p>
+</li>
+<li>（03）SELECT子句中避免使用<em>号<br>ORACLE在解析的过程中,会将</em>依次转换成所有的列名，这个工作是通过查询数据字典完成的，这意味着将耗费更多的时间<br>select empno,ename from emp;</li>
+<li>（04）使用DECODE函数来减少处理时间<br>使用DECODE函数可以避免重复扫描相同记录或重复连接相同的表</li>
+<li>（05）整合简单，无关联的数据库访问</li>
+<li>（06）用TRUNCATE替代DELETE</li>
+<li>（07）尽量多使用COMMIT,因为COMMIT会释放回滚点</li>
+<li>（08）用WHERE子句替换HAVING子句,WHERE先执行，HAVING后执行</li>
+<li>（09）多使用内部函数提高SQL效率</li>
+<li>（10）使用表的别名 salgrade s</li>
+<li>（11）使用列的别名 ename e</li>
+<li>（12）用索引提高效率,在查询中，善用索引</li>
+<li>（13）字符串型，能用=号，不用like,因为=号表示精确比较，like表示模糊比较 </li>
+<li>（14）SQL语句用大写的<br>因为Oracle服务器总是先将小写字母转成大写后，才执行,在eclipse中，先写小写字母，再通过ctrl+shift+X转大写;ctrl+shift+Y转小写    </li>
+<li>（15）避免在索引列上使用NOT,因为Oracle服务器遇到NOT后，他就会停止目前的工作，转而执行全表扫描</li>
+<li>（16）避免在索引列上使用计算<br>WHERE子句中，如果索引列是函数的一部分，优化器将不使用索引而使用全表扫描，这样会变得变慢<br>例如，SAL列上有索引，<br>低效：<code>SELECT EMPNO,ENAME FROM EMP WHERE SAL*12 &gt; 24000;</code><br>高效：<code>SELECT EMPNO,ENAME FROM EMP WHERE SAL &gt; 24000/12;</code></li>
+<li>（17）用 &gt;= 替代 &gt;<br>低效：<code>SELECT * FROM EMP WHERE DEPTNO &gt; 3;</code><br>首先定位到DEPTNO=3的记录并且扫描到第一个DEPT大于3的记录<br>高效：<code>SELECT * FROM EMP WHERE DEPTNO &gt;= 4;</code><br>直接跳到第一个DEPT等于4的记录</li>
+<li>（18）用IN替代OR<br><code>select * from emp where sal = 1500 or sal = 3000 or sal = 800;</code><br><code>select * from emp where sal in (1500,3000,800);</code></li>
+<li>（19）总是使用索引的第一个列<br>如果索引是建立在多个列上，只有在它的第一个列被WHERE子句引用时，优化器才会选择使用该索引<br>当只引用索引的第二个列时，不引用索引的第一个列时，优化器使用了全表扫描而忽略了索引<pre><code class="sql"><span class="keyword">create</span> <span class="keyword">index</span> emp_sal_job_idex <span class="keyword">on</span> emp(sal,job);
+<span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> job != <span class="string">'SALES'</span>;
+</code></pre>
+</li>
+<li>（20）避免改变索引列的类型，显示比隐式更安全<br>当字符和数值比较时，ORACLE会优先转换数值类型到字符类型<br><code>select 123 || &#39;123&#39; from dual;</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>总之，Oracle优化不是一天的课题，你得在长期工作实践中，进行反复测试与总结</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/22/Oracle数据库第三天/" rel="next" title="Oracle数据库第三天">
+                <i class="fa fa-chevron-left"></i> Oracle数据库第三天
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Hanyu" />
+            
+              <p class="site-author-name" itemprop="name">Hanyu</p>
+              <p class="site-description motion-element" itemprop="description">just my blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle第四天"><span class="nav-number">1.</span> <span class="nav-text">Oracle第四天</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PL-SQL编程语言"><span class="nav-number">1.1.</span> <span class="nav-text">PL/SQL编程语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.1.2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常量和变量的定义"><span class="nav-number">1.1.3.</span> <span class="nav-text">常量和变量的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if语句"><span class="nav-number">1.1.4.</span> <span class="nav-text">if语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环"><span class="nav-number">1.1.5.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#游标"><span class="nav-number">1.1.6.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例外"><span class="nav-number">1.1.7.</span> <span class="nav-text">例外</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储过程"><span class="nav-number">1.2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储函数"><span class="nav-number">1.3.</span> <span class="nav-text">存储函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器"><span class="nav-number">1.4.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle优化"><span class="nav-number">1.5.</span> <span class="nav-text">Oracle优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hanyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
